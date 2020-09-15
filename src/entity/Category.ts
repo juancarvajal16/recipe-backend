@@ -4,7 +4,7 @@ import { Recipe } from "./Recipe"
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Category extends BaseEntity {
 
   @Field(type => ID)
   @PrimaryGeneratedColumn()
@@ -14,14 +14,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   name!: string;
 
-  @Field()
-  @Column()
-  email!: string;
-
-  @Column("text", { unique: true })
-  password!: string;
-
-/*   @Field(type => [Recipe])
-  @OneToMany(type => Recipe, recipe => recipe.creator)
-  recipes!: Recipe[]; */
+  @Field(type => [Recipe])
+  @OneToMany(type => Recipe, recipe => recipe.category)
+  recipes!: Recipe[];
 }

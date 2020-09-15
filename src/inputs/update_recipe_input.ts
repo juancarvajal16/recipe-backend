@@ -1,4 +1,5 @@
-import { InputType, Field } from 'type-graphql';
+import { InputType, Field, Int } from 'type-graphql';
+import { Category } from '../entity/Category';
 
 @InputType()
 export class UpdateRecipeInput {
@@ -11,6 +12,6 @@ export class UpdateRecipeInput {
   @Field(type => [String], { nullable: true })
   ingredients?: string[];
 
-  @Field({ nullable: true })
-  category?: string;
+  @Field(type=>Int, { nullable: true })
+  categoryId?: number;
 }

@@ -6,6 +6,7 @@ import { createConnection } from 'typeorm';
 import { buildSchema } from "type-graphql";
 import { RecipeResolver } from './resolvers/recipe_resolver';
 import { UserResolver } from './resolvers/user_resolver';
+import { CategoryResolver } from "./resolvers/category_resolver";
 
 async function startServer() {
 
@@ -17,7 +18,7 @@ async function startServer() {
 
     // Build GraphQL schema
     const schema = await buildSchema({
-        resolvers: [RecipeResolver, UserResolver],
+        resolvers: [RecipeResolver, CategoryResolver, UserResolver],
         validate: false
     });
 

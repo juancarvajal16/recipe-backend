@@ -1,8 +1,6 @@
-import { Resolver, Query, Mutation, Arg, Int, Ctx, Authorized, ObjectType, Field, UseMiddleware } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, ObjectType, Field } from "type-graphql";
 import { User } from "../entity/User";
 import bcrypt from 'bcryptjs';
-import { MyContext } from "../MyContext";
-import {isAuth} from '../isAuth';
 import { sign } from 'jsonwebtoken';
 
 @ObjectType()
@@ -14,20 +12,9 @@ class LoginResponse{
 @Resolver()
 export class UserResolver {
 
-  @UseMiddleware(isAuth)
-  @Query(() => String)
-  hello(){
-   return "hello world"
-  }
-
   @Query(() => [User])
-  async getUsers(){
+  async users(){
     return await User.find()
-  }
-
-  @Query(() => User)
-  async getOneUser(@Arg("id", type=>Int) id: number){
-    return await User.findOne({ where: { id }})
   }
 
   @Mutation(() => User)

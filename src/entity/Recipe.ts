@@ -1,6 +1,7 @@
 import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, RelationId, JoinColumn} from 'typeorm'
 import { ObjectType, Field, ID, Int } from 'type-graphql';
 import { User } from "./User"
+import { Category } from './Category';
 
 @ObjectType()
 @Entity()
@@ -22,16 +23,21 @@ export class Recipe extends BaseEntity {
   @Column("simple-array", {array: true, nullable: true})
   ingredients!: string[];
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  category!: string;
+  @Field(type => Int, { nullable: true })
+  @Column("int", { nullable: true })
+  categoryId!: number;
+
+  @Field(type => Category, { nullable: true })
+  @ManyToOne(type => Category, category => category.recipes)
+  @JoinColumn({name: "categoryId"})
+  category!: Category;
 
   @Field(type => Int, { nullable: true })
   @Column("int", { nullable: true })
   creatorId!: number;
 
-  @Field(type => User)
-  @ManyToOne(type => User, user => user.recipes)
+  @Field(type => User, { nullable: true })
+  @ManyToOne(type => User)
   @JoinColumn({name: "creatorId"})
   creator!: User;
 }
