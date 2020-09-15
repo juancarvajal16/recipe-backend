@@ -3,12 +3,16 @@
 Application contains graphql server and is integrated with TypeORM. Server is set up to run on port 4000.
 
 ## How to run
-To run the application, first you need to install the packages:
+1. To run the application, first you need to install the packages:
 ```
 npm install
 ```
 
-Then you can run using command:
+2. Create postgres database
+
+3. Setup database settings inside ormconfig.json file
+
+4. Then you can run using command:
 ```
 npm start
 ```
