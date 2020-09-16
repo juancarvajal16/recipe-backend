@@ -59,6 +59,10 @@ export class RecipeResolver implements ResolverInterface<Recipe> {
     @Ctx() { payload }: MyContext,
   ) {
     const userId = payload!.userId;
+    const category = await Category.findOne(data.categoryId);
+    if(!category){
+      throw new Error("It does not exist a category with that id")
+    }
     const newRecipe = {...data, creatorId:userId};
     console.log(newRecipe);
     return await Recipe.create(newRecipe).save();

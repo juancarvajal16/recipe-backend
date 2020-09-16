@@ -30,14 +30,30 @@ const create_recipe_input_1 = require("../inputs/create_recipe_input");
 const update_recipe_input_1 = require("../inputs/update_recipe_input");
 const isAuth_1 = require("../isAuth");
 let RecipeResolver = class RecipeResolver {
-    getRecipes() {
+    getRecipes(filter, term) {
         return __awaiter(this, void 0, void 0, function* () {
-            const recipes = yield Recipe_1.Recipe.find();
-            const recipespIngredient = recipes.filter((recipe) => {
-                return recipe.ingredients.indexOf("papa") > -1;
-            });
-            console.log(recipespIngredient);
-            return recipespIngredient;
+            if (filter && term) {
+                switch (filter) {
+                    case "name":
+                        return yield Recipe_1.Recipe.find({ where: `"name" ILIKE '%${term}%'` });
+                    case "description":
+                        return yield Recipe_1.Recipe.find({ where: `"description" ILIKE '%${term}%'` });
+                    case "ingredient":
+                        return yield Recipe_1.Recipe.createQueryBuilder('recipe')
+                            .where('recipe.ingredients::text ILIKE :ingredients', { ingredients: `%${term}%` })
+                            .getMany();
+                    case "category":
+                        return yield Recipe_1.Recipe.createQueryBuilder('recipe')
+                            .leftJoinAndSelect("recipe.category", "category")
+                            .where('category.name ILIKE :name', { name: `%${term}%` })
+                            .getMany();
+                    default: throw new Error("Wrong filter!, select one of these: name, description, ingredient or category");
+                }
+            }
+            else if (term) {
+                return yield Recipe_1.Recipe.find({ where: `"name" ILIKE '%${term}%'` });
+            }
+            return yield Recipe_1.Recipe.find();
         });
     }
     getOneRecipe(id) {
@@ -53,6 +69,10 @@ let RecipeResolver = class RecipeResolver {
     createRecipe(data, { payload }) {
         return __awaiter(this, void 0, void 0, function* () {
             const userId = payload.userId;
+            const category = yield Category_1.Category.findOne(data.categoryId);
+            if (!category) {
+                throw new Error("It does not exist a category with that id");
+            }
             const newRecipe = Object.assign(Object.assign({}, data), { creatorId: userId });
             console.log(newRecipe);
             return yield Recipe_1.Recipe.create(newRecipe).save();
@@ -88,8 +108,10 @@ let RecipeResolver = class RecipeResolver {
 __decorate([
     type_graphql_1.Query(() => [Recipe_1.Recipe]),
     type_graphql_1.UseMiddleware(isAuth_1.isAuth),
+    __param(0, type_graphql_1.Arg('filter', { nullable: true })),
+    __param(1, type_graphql_1.Arg('term', { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], RecipeResolver.prototype, "getRecipes", null);
 __decorate([

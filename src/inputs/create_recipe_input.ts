@@ -1,5 +1,4 @@
 import { InputType, Field, Int } from 'type-graphql';
-import { Category } from '../entity/Category';
 
 @InputType()
 export class CreateRecipeInput {

@@ -1,6 +1,6 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, RelationId, JoinColumn} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typeorm';
 import { ObjectType, Field, ID, Int } from 'type-graphql';
-import { User } from "./User"
+import { User } from "./User";
 import { Category } from './Category';
 
 @ObjectType()
