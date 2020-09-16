@@ -6,5 +6,18 @@
     "password": "3165fac5a5c81966d64fb96106f782b73dbf4aaf135dba86a95f5ffe802e0057",
     "database": "d83quter7pmv56",
     "synchronize": true,
-    "entities": ["src/entity/**/*.ts"]
+    "entities": [
+        "dist/entity/*.js"
+     ],
+     "migrations": [
+        "src/migration/**/*.ts"
+     ],
+     "subscribers": [
+        "src/subscriber/**/*.ts"
+     ],
+     "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+     }
 }

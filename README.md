@@ -121,6 +121,7 @@ query {
   }
  }
 }
+```
 - Get one recipe
 ```graphql
 query {
