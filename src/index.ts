@@ -28,7 +28,7 @@ async function startServer() {
         context: ({ req }) => ({ req }),
         introspection: true,
         playground: true,
-    }
+    });
 
     // Apply the GraphQL server middleware
     server.applyMiddleware({app, path});
