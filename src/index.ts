@@ -29,8 +29,9 @@ async function startServer() {
     server.applyMiddleware({app, path});
 
     // Launch the express server
-    app.listen(3000, ()=> {
-        console.log("Server started on http://localhost:3000/graphql")
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+    console.log(`Server running on port ${ PORT }`);
     });
 
 }
