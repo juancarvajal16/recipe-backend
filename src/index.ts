@@ -19,11 +19,16 @@ async function startServer() {
     // Build GraphQL schema
     const schema = await buildSchema({
         resolvers: [RecipeResolver, CategoryResolver, UserResolver],
-        validate: false
+        validate: false,
     });
 
      // Create GraphQL server
-    const server = new ApolloServer({ schema, context: ({ req }) => ({ req }) });
+    const server = new ApolloServer({ 
+        schema, 
+        context: ({ req }) => ({ req }),
+        introspection: true,
+        playground: true,
+    }
 
     // Apply the GraphQL server middleware
     server.applyMiddleware({app, path});
