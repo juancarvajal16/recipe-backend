@@ -48,7 +48,7 @@ For example:
 }
 ```
 
-### Example GraphQL mutations
+## Example GraphQL mutations
 - Create recipe
 ```graphql
 mutation {
@@ -106,7 +106,7 @@ mutation {
 }
 ```
 
-### Example Queries
+## Example Queries
 - Get all recipes
 ```graphql
 query {
@@ -175,7 +175,7 @@ query {
 }
 ```
 
-### Example Filtering
+## Example Filtering
 User can query all the recipes filtering by category, name, ingredient or description.
 - Query all recipes that contain a specific ingredient
 ```graphql
